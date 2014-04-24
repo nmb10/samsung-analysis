@@ -2,7 +2,7 @@
 # > Rscript run_analysis.R
 
 data_dir <- "UCI HAR Dataset"
-#data_dir <- "UCI HAR Dataset_small"
+# data_dir <- "UCI HAR Dataset_small"
 
 check_data_existance <- function() {
     if (file.exists(data_dir)) {
@@ -46,11 +46,23 @@ get_merged <- function() {
     merged
 }
 
+get_mean_and_std <- function(df) {
+    ## removes columns without main or std words in column name
+
+    # find columns to include in the return data frame
+    valid_columns <- grep("mean|std", names(df), value=TRUE)
+
+    # subsetting data frame on valid columns
+    subset(df, select=valid_columns)
+}
+
 main <- function() {
     if (check_data_existance()) {
         merged <- get_merged()
         write.table(merged, file="merged.txt", row.names=FALSE)
-        print("Done")
+        mean_and_std <- get_mean_and_std(merged)
+        write.table(mean_and_std, file="mean_and_std.txt", row.names=FALSE)
+        print("Done. FIXME: What user should see?")
     } else {
         print("error")
     }
