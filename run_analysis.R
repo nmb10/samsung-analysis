@@ -39,7 +39,7 @@ get_merged <- function() {
 
     # set column names
     colnames(merged_X) <- features[, 2]
-    colnames(merged_y) <- c("Activity")
+    colnames(merged_y) <- c("Activity_id")
 
     # merge x an y
     merged <- cbind(merged_X, merged_y)
@@ -50,18 +50,38 @@ get_mean_and_std <- function(df) {
     ## removes columns without main or std words in column name
 
     # find columns to include in the return data frame
-    valid_columns <- grep("mean|std", names(df), value=TRUE)
+    valid_columns <- grep("mean|std|Activity_id", names(df), value=TRUE)
 
     # subsetting data frame on valid columns
     subset(df, select=valid_columns)
 }
 
+expand_activities <- function(df) {
+    ## replaces activity codes in the given data frame with their names
+    ## df - data frame contaning Activity_id column with activity codes
+    activity_df <- read.table(
+        file.path(data_dir, "activity_labels.txt"),
+        header=FALSE)
+    names(activity_df) <- c("id", "Activity")
+    total <- merge(df, activity_df, by.x="Activity_id", by.y="id")
+
+    # remove activity codes
+    total$Activity_id <- NULL
+
+    total
+}
+
+
 main <- function() {
     if (check_data_existance()) {
         merged <- get_merged()
-        write.table(merged, file="merged.txt", row.names=FALSE)
+        # write.table(merged, file="merged.txt", row.names=FALSE)
         mean_and_std <- get_mean_and_std(merged)
-        write.table(mean_and_std, file="mean_and_std.txt", row.names=FALSE)
+        # write.table(mean_and_std, file="mean_and_std.txt", row.names=FALSE)
+
+        with_activities <- expand_activities(mean_and_std)
+        write.table(with_activities, file="with_activities.txt", row.names=FALSE)
+
         print("Done. FIXME: What user should see?")
     } else {
         print("error")
