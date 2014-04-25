@@ -80,9 +80,9 @@ main <- function() {
         # write.table(mean_and_std, file="mean_and_std.txt", row.names=FALSE)
 
         with_activities <- expand_activities(mean_and_std)
-        write.table(with_activities, file="with_activities.txt", row.names=FALSE)
+        write.table(with_activities, file="tidy.txt", row.names=FALSE)
 
-        print("Done. FIXME: What user should see?")
+        print("Done. tidy.txt contains tidy data frame. tidy_average.txt contains average activities.")
     } else {
         print("error")
     }
