@@ -4,7 +4,26 @@
 require(reshape2)
 
 data_dir <- "UCI HAR Dataset"
-#data_dir <- "UCI HAR Dataset_small"
+data_dir <- "UCI HAR Dataset_small"
+
+
+main <- function() {
+    if (check_data_existance()) {
+        merged <- get_merged()
+
+        mean_and_std <- get_mean_and_std(merged)
+
+        with_activities <- expand_activities(mean_and_std)
+
+        average_df <- activities_average(with_activities)
+        write.table(average_df, file="tidy_average.txt", row.names=FALSE)
+
+        print("Done. tidy.txt contains tidy data frame. tidy_average.txt contains average activities.")
+    } else {
+        print("error")
+    }
+}
+
 
 check_data_existance <- function() {
     if (file.exists(data_dir)) {
@@ -92,24 +111,6 @@ activities_average <- function(df) {
     activities_melt <- melt(df, id=ids, measure.vars=all_except_ids)
     average_df <- dcast(activities_melt, subject_id + Activity ~ variable, mean)
     average_df
-}
-
-
-main <- function() {
-    if (check_data_existance()) {
-        merged <- get_merged()
-
-        mean_and_std <- get_mean_and_std(merged)
-
-        with_activities <- expand_activities(mean_and_std)
-
-        average_df <- activities_average(with_activities)
-        write.table(average_df, file="tidy_average.txt", row.names=FALSE)
-
-        print("Done. tidy.txt contains tidy data frame. tidy_average.txt contains average activities.")
-    } else {
-        print("error")
-    }
 }
 
 arg <- sub(".*=", "", commandArgs()[4])
