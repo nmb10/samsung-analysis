@@ -20,7 +20,7 @@ Script does following job:
 
 Installation:
 ------------
-- Download [script](https://github.com/nmb10/samsung-analysis/releases) and [data](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones) to the script.
+- Download [script](https://raw.githubusercontent.com/nmb10/samsung-analysis/master/run_analysis.R) and [data](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones) to the script.
 - Unzip data to the script's directory.
 
 
