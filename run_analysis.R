@@ -4,7 +4,7 @@
 require(reshape2)
 
 data_dir <- "UCI HAR Dataset"
-data_dir <- "UCI HAR Dataset_small"
+# data_dir <- "UCI HAR Dataset_small"
 
 
 main <- function() {
