@@ -98,12 +98,10 @@ activities_average <- function(df) {
 main <- function() {
     if (check_data_existance()) {
         merged <- get_merged()
-        # write.table(merged, file="merged.txt", row.names=FALSE)
+
         mean_and_std <- get_mean_and_std(merged)
-        # write.table(mean_and_std, file="mean_and_std.txt", row.names=FALSE)
 
         with_activities <- expand_activities(mean_and_std)
-        write.table(with_activities, file="tidy.txt", row.names=FALSE)
 
         average_df <- activities_average(with_activities)
         write.table(average_df, file="tidy_average.txt", row.names=FALSE)
