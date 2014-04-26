@@ -18,7 +18,7 @@ main <- function() {
         average_df <- activities_average(with_activities)
         write.table(average_df, file="tidy_average.txt", row.names=FALSE)
 
-        print("Done. tidy.txt contains tidy data frame. tidy_average.txt contains average activities.")
+        print("Done. tidy_average.txt contains average activities.")
     } else {
         print("error")
     }
@@ -113,6 +113,8 @@ activities_average <- function(df) {
     average_df
 }
 
+# bottom code recognizes how the script was loaded, in case it was running as script,
+# it does all the job, but if it was imported with require, script does nothing.
 arg <- sub(".*=", "", commandArgs()[4])
 
 if (!is.na(arg) & arg == "run_analysis.R") {
